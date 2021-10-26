@@ -1,17 +1,25 @@
 import { Typography } from '@mui/material';
+import React from 'react';
 import './Tile.scss';
 
-function Tile(props: any): JSX.Element {
-    console.log('props: ', props);
+export interface ITile {
+    isHeader: boolean;
+    title: string;
+}
 
-    return (
-        <Typography>
-            <div className={props.isHeader ? "header" : "tile"}>
-                <p>{props.title}</p>
-            </div>
-        </Typography>
-        
-    )
+class Tile extends React.Component<ITile> {
+    constructor(props: any) {
+        super(props);
+
+    }
+
+    render() {
+        return (
+            <div className={this.props.isHeader ? "header" : "tile"}>
+                <Typography>{this.props.title}</Typography>
+            </div> 
+        )
+    }
 }
 
 export default Tile;

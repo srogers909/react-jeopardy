@@ -1,11 +1,17 @@
 import { Grid } from '@mui/material';
 import React from 'react';
-import { Observable, of, take } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import Tile from '../Tile/Tile';
 import './Board.scss';
 
 interface IBoardState {
-    categories: Array<any>;
+    categories: Array<JSX.Element>;
+}
+
+interface ICategory {
+    id: number;
+    title: string;
+    clues_count: number;
 }
 class Board extends React.Component<{}, IBoardState> {
     constructor(props: any) {
@@ -13,7 +19,7 @@ class Board extends React.Component<{}, IBoardState> {
         this.state = { categories: [] };
     }
 
-    private getHeaders(): Observable<any> {
+    private getHeaders(): Observable<Array<ICategory>> {
         return new Observable(obs => {
             fetch(`http://jservice.io/api/categories?count=6&offset=${Math.floor((Math.random() * 2500) + 1)}`, { method: 'GET' })
                 .then(response => response.json())
@@ -26,16 +32,16 @@ class Board extends React.Component<{}, IBoardState> {
     }
 
     componentDidMount() {
-        let categories: Array<any> = []
+        let categories: Array<JSX.Element> = [];
 
         this.getHeaders()
+            .pipe(take(1))
             .subscribe({
-                next: (res: any) => {
-                    console.log('res: ', res);
-                    res.map((item: any) => {
+                next: (res: Array<ICategory>) => {
+                    res.map((item: ICategory) => {
                         categories.push(
-                            <Grid item xs={2}>
-                                <Tile isHeader="true" title={item.title} key={item.id} />
+                            <Grid item xs={2} alignItems="center" justifyContent="center" direction="column">
+                                <Tile isHeader={true} title={item.title} key={item.id} />
                             </Grid>
                         );
                     });
@@ -49,16 +55,17 @@ class Board extends React.Component<{}, IBoardState> {
     }
 
     render() {
-        console.log('categories: ', this.state);
         return (
             <div className="board-container">
-                <Grid container>
+                <Grid 
+                    container 
+                    justifyContent="center" 
+                    alignItems="center">
                     {this.state.categories}
                 </Grid>
             </div>
         );
-    }
-    
+    }    
 }
 
 export default Board;
