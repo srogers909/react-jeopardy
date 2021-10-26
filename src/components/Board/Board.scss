@@ -1,5 +1,8 @@
+@import "./../../styles/primary-palette.scss";
 
 .board-container {
-    background-color: blue;
-    color: white;
+    background-color: grey;
+    color: $light;
+    width: 100vw;
+    height: 100vh;
 }

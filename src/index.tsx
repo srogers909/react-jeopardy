@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './index.scss';
 import Board from './components/Board/Board';
 import reportWebVitals from './reportWebVitals';
 

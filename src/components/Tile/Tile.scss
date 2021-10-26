@@ -1,0 +1,15 @@
+.header {
+    height: 100px;
+    text-align: center;
+    background-color: blue;
+    color: white;
+    margin: 5px;
+
+    p {
+        height: auto;
+        position: relative;
+        top: calc(100px / 2 - 12px);
+        font-weight: bold;
+        font-size: 1rem;
+    }
+}
